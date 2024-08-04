@@ -1,7 +1,7 @@
 // src/components/Login.js
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../slices/authSlice";
+import { login, logout } from "../../redux/slices/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();

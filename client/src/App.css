@@ -1,0 +1,15 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+:root {
+  /* colors */
+  --red: rgb(209, 0, 35, 1);
+  --Dark: rgba(21, 22, 29, 1) rgba(30, 31, 41, 1);
+  --Grey: rgb(228, 231, 237) rgb(251 251 252) rgb(141 153 174) rgb(185 186 188);
+  --Body: rgb(51 51 51);
+  --Headers: rgb(43 45 66);
+}
