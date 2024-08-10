@@ -1,0 +1,12 @@
+.card-page-container {
+  display: flex;
+  justify-content: center;
+}
+
+.CardPage {
+  display: flex;
+  column-gap: 140px;
+  row-gap: 50px;
+  flex-wrap: wrap;
+  max-width: 1050px;
+}

@@ -1,24 +1,20 @@
 import "./App.css";
-import Card from "./components/card/Card";
+import AboutUs from "./components/aboutUs/aboutUs";
+import CardPage from "./components/cardsPage/CardPage";
+import MiniNav from "./components/miniNav/MiniNav";
 import NavBar from "./components/nav_bar/NavBar";
+import ShopNav from "./components/shopNav/ShopNav";
 
 function App() {
   return (
     <>
       <div className="App">
         <div className="container">
+          <MiniNav />
           <NavBar />
-          <Card
-            productName={"laptop electrick"}
-            price={1300}
-            showSale={true}
-            status={"NEW"}
-            showStatus={true}
-            sale={30}
-            img={"assets/img/product01.png"}
-            alt={"a laptop"}
-            rating={4}
-          />
+          <ShopNav />
+          <CardPage />
+          <AboutUs />
         </div>
       </div>
     </>

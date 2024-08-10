@@ -1,43 +1,52 @@
 .NavBar {
-  padding: 15px 0px;
-  background-color: rgba(0, 0, 0, 0.88);
+  position: fixed; /* Keep the navbar fixed */
+  top: 33.18px; /* Initial top position with padding */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensure it stays on top of other elements */
+  padding: 15px 0; /* Vertical padding */
+  background-color: rgba(0, 0, 0, 0.88); /* Background color */
   color: white;
   text-align: center;
+  transition: top 0.3s ease; /* Smooth transition for top changes */
 }
 
 .container2 {
   display: flex;
   justify-content: center;
-  gap: 200px;
+  gap: 150px;
   width: 100%;
 }
+
 @media (max-width: 1145px) {
   .container2 {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 30px;
+    gap: 3px;
+  }
+  .NavBar-Search {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
+    width: 400px;
   }
+
   .NavBar {
     height: 170px;
   }
+
   .NavBar-Cart {
-    margin-top: -180px;
+    margin-top: -230px;
   }
 
   .NavBar-MiniContainer {
     flex-direction: column;
-    gap: 15px;
   }
 
   .NavBar-Search {
     margin: 0;
-  }
-  .NavBar-MiniContainer {
-    flex-direction: column;
-    gap: 15px;
   }
 }
 
@@ -45,14 +54,14 @@
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 200px;
+  gap: 230px;
   max-width: 800px;
 }
 
 .Search {
-  border-radius: 40px 0px 0px 40px;
+  border-radius: 40px 0 0 40px;
   height: 40px;
-  padding: 0px 15px;
+  padding: 0 15px;
   border: 1px solid #e4e7ed;
   background-color: #fff;
   width: 400px;
@@ -69,12 +78,20 @@
   color: #fff;
   font-weight: 700;
   border: none;
-  border-radius: 0px 40px 40px 0px;
+  border-radius: 0 40px 40px 0;
   color: var(--grey);
 }
+
 .search-button,
 .NavBar-Cart:hover {
   cursor: pointer;
+}
+
+.NavBar-Cart {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .NavBar-Cart span {
@@ -89,15 +106,18 @@
   border-radius: 50%;
   display: inline-block;
 }
-.NavBar-Cart {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
 
 .svg-cart {
   height: 25px;
   width: 25px;
   fill: white;
+}
+
+.NavBar-Cart:hover span {
+  color: var(--red);
+}
+
+/* Add some top margin to the rest of the content to avoid it being hidden under the navbar */
+.body-content {
+  margin-top: 60px; /* Adjust this based on the height of your navbar */
 }

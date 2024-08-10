@@ -1,0 +1,86 @@
+.about-us {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  background-color: #1c1c1c;
+  color: #ffffff;
+  padding: 20px 50px;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-top: 150px;
+}
+@media (max-width: 1572px) {
+  .about-us .about-us-details,
+  .about-us .about-us-service {
+    width: 20%; /* Use !important if necessary */
+  }
+}
+@media (max-width: 860px) {
+  .about-us .about-us-details,
+  .about-us .about-us-service {
+    width: 25%; /* Use !important if necessary */
+  }
+  .about-us-description {
+    width: 130px !important;
+    flex: 0 0 130px;
+  }
+}
+
+.about-us-details,
+.about-us-service {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 10%;
+  text-align: left; /* Ensure text is left-aligned */
+}
+.about-us-service {
+  padding-left: 5%;
+}
+
+.about-us-title,
+.service-title {
+  font-size: 1.125rem; /* Converted from 18px */
+  font-weight: bold;
+  margin-bottom: 15px; /* Converted from 15px */
+}
+
+.my-account {
+  padding-top: 20px;
+}
+
+.about-us-description {
+  padding-top: 20px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  color: #b0b0b0;
+  width: 250px;
+}
+
+.about-us-contact {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contact-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px; /* Adjust margin for better spacing */
+}
+
+.contact-info {
+  color: #b0b0b0;
+}
+
+.service-link {
+  display: block;
+  margin-bottom: 10px;
+  color: #b0b0b0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.service-link:hover {
+  color: var(--red);
+}

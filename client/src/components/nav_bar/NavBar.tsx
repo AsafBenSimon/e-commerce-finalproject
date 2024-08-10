@@ -17,7 +17,7 @@ function NavBar() {
               </button>
             </div>
             <div className="NavBar-Cart">
-              <img className="svg-cart" src="assets\icons\cart.svg" />
+              <img className="svg-cart" src="assets\img\cart.png" />
               <span>Your Cart</span>
             </div>
           </div>

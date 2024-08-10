@@ -1,0 +1,42 @@
+.shop-nav {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+@media (max-width: 1145px) {
+  .shop-nav {
+    margin-top: 250px;
+  }
+}
+
+.about-us span,
+.about-us p {
+  font-size: 0.75rem; /* Smaller font size for spans and paragraphs */
+  line-height: 1.4;
+}
+
+.about-us .about-us-title,
+.about-us .service-title {
+  font-size: 1rem; /* Keep the titles the same size */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.shop-nav span {
+  color: rgb(39, 39, 39);
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+
+.red-line {
+  height: 2px;
+  width: 0%;
+  background-color: var(--red);
+  transition: width 0.2s ease; /* Smooth transition for width change */
+}
+
+.red-line-container:hover .red-line {
+  width: 100%; /* Expand the red line to full width on hover */
+}
