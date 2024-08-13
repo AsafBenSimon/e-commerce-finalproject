@@ -12,6 +12,7 @@
   gap: 680px;
   z-index: 2000; /* Higher z-index to ensure it appears above the NavBar */
 }
+
 @media (max-width: 1145px) {
   .MiniNav {
     gap: 21px;
@@ -38,7 +39,56 @@
   width: 13px;
 }
 
-.your-info:hover {
+.your-info a {
+  color: white; /* Default color for the link */
+  text-decoration: none; /* Remove underline */
+}
+
+.your-info a:hover {
+  color: var(--red); /* Change to red on hover */
+}
+
+.welcome-container {
+  position: relative;
+}
+
+.welcome-text {
   cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 20px; /* Adjust position as needed */
+  right: 0;
+  background-color: var(--dark);
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 20px var(--red);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.dropdown-menu a,
+.dropdown-menu span {
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu span:hover {
+  color: var(--red);
+  text-decoration: underline;
+}
+
+.logout-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+.logout-button:hover {
   color: var(--red);
 }

@@ -37,11 +37,8 @@ function AboutUs() {
       </div>
       <div className="about-us-service">
         <span className="service-title">SERVICE</span>
-        <span className="service-link my-account">My Account</span>
+        <span className="service-link my-account"> My Account</span>
         <span className="service-link">View Cart</span>
-        <span className="service-link">Wishlist</span>
-        <span className="service-link">Track My Order</span>
-        <span className="service-link">Help</span>
       </div>
     </div>
   );

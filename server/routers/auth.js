@@ -20,41 +20,35 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ message: error.details[0].message });
   }
 
-  // Check if user already exists
   try {
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    // Create new user
     const newUser = new User({
       email: req.body.email,
       password: hashedPassword,
       userName: req.body.userName,
     });
 
-    // Save user to database
     const savedUser = await newUser.save();
 
-    // Generate JWT token
     const token = jwt.sign(
       { user: { id: savedUser._id } },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // Set token in cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Enable in production with HTTPS
+      secure: process.env.NODE_ENV === "production",
     });
 
-    // Respond with token and user data
     res.status(201).json({
+      message: "Registration successful", // Ensure message is included in the response
       token,
       user: {
         id: savedUser._id,

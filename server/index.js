@@ -8,7 +8,12 @@ import productsRouter from "./routers/products.js";
 import ordersRouter from "./routers/orders.js";
 // import commentsRouter from "./routers/comments.js"; // Import the comments router
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Allow requests from your frontend URL
+    credentials: true, // Allow cookies and other credentials
+  })
+);
 dotenv.config();
 
 mongoose
