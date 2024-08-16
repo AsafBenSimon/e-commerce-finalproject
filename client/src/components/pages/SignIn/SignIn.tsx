@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import "./SignIn.css";
 
-const LOGIN_URL = "/api/auth/login";
+const LOGIN_URL = "http://localhost:3000/api/auth/login";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -29,7 +29,7 @@ const SignIn: React.FC = () => {
 
       if (response.data?.token) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", response.data.user.userName); // Ensure this is correctly set
+        localStorage.setItem("username", response.data.user.userName);
         setSuccess(true);
         navigate("/");
       } else {
@@ -78,6 +78,9 @@ const SignIn: React.FC = () => {
             <button type="submit">Sign In</button>
             {error && <p className="error">{error}</p>}
           </form>
+          <p>
+            Don't have an account? <Link to="/register">Register here</Link>
+          </p>
         </div>
       )}
     </>

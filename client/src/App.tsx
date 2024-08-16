@@ -8,6 +8,7 @@ import CardPage from "./components/cardsPage/CardPage";
 import AboutUs from "./components/aboutUs/aboutUs";
 import SignIn from "./components/pages/SignIn/SignIn";
 import Register from "./components/pages/Register/Register"; // Import Register component
+import Profile from "./components/pages/Profile/Profile";
 
 function App() {
   return (
@@ -27,8 +28,9 @@ function App() {
             }
           />
           <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />{" "}
-          {/* Add route for Register */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />{" "}
+          {/* Add route for Profile */}
         </Routes>
       </div>
     </Router>

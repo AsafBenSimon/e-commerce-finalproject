@@ -92,3 +92,6 @@
 .logout-button:hover {
   color: var(--red);
 }
+.welcome-text:hover {
+  color: var(--red);
+}

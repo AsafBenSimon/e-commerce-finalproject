@@ -3,7 +3,7 @@ import axios from "../../../api/axios"; // Ensure this path is correct
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
-const REGISTER_URL = "/api/auth/register"; // Endpoint for registration
+const REGISTER_URL = "http://localhost:3000/api/auth/register"; // Endpoint for registration
 
 const Register: React.FC = () => {
   const [userName, setUserName] = useState<string>("");

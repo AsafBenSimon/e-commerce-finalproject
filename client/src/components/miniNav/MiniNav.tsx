@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import "./MiniNav.css";
 
-const LOGOUT_URL = "/api/auth/logout";
+const LOGOUT_URL = "http://localhost:3000/api/auth/logout";
 
 const MiniNav: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
+  const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +25,23 @@ const MiniNav: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Close dropdown if clicked outside of it
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -36,6 +55,9 @@ const MiniNav: React.FC = () => {
     navigate("/sign-in");
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
   return (
     <div className="MiniNav">
       <div className="us-info">
@@ -49,20 +71,25 @@ const MiniNav: React.FC = () => {
         </div>
         <div className="location">
           <img src="assets/icons/location.svg" alt="Location" />
-          <p>qiryat ono levi eskol 78</p>
+          <p>Qiryat Ono, Levi Eskol 78</p>
         </div>
       </div>
       <div className="your-info">
         <img src="assets/icons/user.svg" alt="User" />
         {isLoggedIn ? (
           <div className="welcome-container">
-            <span className="welcome-text">Welcome back, {username}!</span>
-            <div className="dropdown-menu">
-              <Link to="/cart">Your Cart</Link>
-              <button className="logout-button" onClick={handleLogout}>
-                Log Out
-              </button>
-            </div>
+            <span className="welcome-text" onClick={toggleDropdown}>
+              Welcome back, {username}!
+            </span>
+            {dropdownVisible && (
+              <div className="dropdown-menu" ref={dropdownRef}>
+                <Link to="/profile">Profile</Link>
+                <Link to="/cart">Your Cart</Link>
+                <button className="logout-button" onClick={handleLogout}>
+                  Log Out
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <Link to="/sign-in">My Account</Link>

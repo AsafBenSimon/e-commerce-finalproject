@@ -67,8 +67,8 @@ router.get("/profile", authenticateUser, async (req, res) => {
 // Update user profile (assuming you want to add this functionality)
 router.put("/profile", authenticateUser, async (req, res) => {
   try {
-    const userId = req.user.id;
-    const { email, userName } = req.body;
+    const userId = req.user.id; // User ID from authentication middleware
+    const { email, userName } = req.body; // Data to update
 
     // Validate input (if needed)
 

@@ -25,6 +25,19 @@ router.post("/", [authenticateUser, isAdmin], async (req, res) => {
   }
 });
 
+// GET /api/products
+// GET /api/products/list
+router.get("/list", async (req, res) => {
+  try {
+    const products = await Product.find(); // Fetch all products from the database
+    res.json(products);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch products", error: err.message });
+  }
+});
+
 // POST /products/:productId/reviews - Add a review to a product
 router.post(
   "/products/:productId/reviews",
