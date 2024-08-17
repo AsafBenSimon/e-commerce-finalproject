@@ -7,21 +7,48 @@ const router = express.Router();
 
 // Route to add a new product
 router.post("/", [authenticateUser, isAdmin], async (req, res) => {
-  const { name, price, description, image } = req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    rating,
+    sale,
+    status,
+    showStatus,
+    showSale,
+  } = req.body;
 
   try {
+    // Validate and normalize the rating
+    let finalRating = rating;
+    if (typeof rating === "number") {
+      finalRating = Math.max(1, Math.min(5, rating));
+    } else {
+      finalRating = 3; // Default rating if not provided or invalid
+    }
+
+    // Create a new product with the provided details
     const newProduct = new Product({
       name,
       price,
       description,
       image,
+      rating: finalRating,
+      sale: sale || 0, // Default sale to 0 if not provided
+      status: status || "", // Default status to empty string if not provided
+      showStatus: showStatus || false, // Default showStatus to false if not provided
+      showSale: showSale || false, // Default showSale to false if not provided
     });
 
+    // Save the new product to the database
     const savedProduct = await newProduct.save();
+
+    // Respond with the saved product
     res.status(201).json(savedProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

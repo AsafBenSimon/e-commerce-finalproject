@@ -6,6 +6,7 @@ import { RootState, AppDispatch } from "../../../app/store";
 import {
   fetchUserProfile,
   updateUserProfile,
+  changeUserPassword,
 } from "../../../app/features/user/userThunk";
 import MiniNav from "../../miniNav/MiniNav";
 import NavBar from "../../nav_bar/NavBar";
@@ -22,6 +23,16 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState<User>({
     userName: "",
     email: "",
+  });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [passwordErrors, setPasswordErrors] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
   const [updateStatus, setUpdateStatus] = useState<string | null>(null);
 
@@ -69,6 +80,14 @@ const Profile: React.FC = () => {
     }));
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -77,10 +96,42 @@ const Profile: React.FC = () => {
       await dispatch(updateUserProfile(formData)).unwrap();
       console.log("Profile update action dispatched.");
       setUpdateStatus("succeeded");
-      alert("Profile updated successfully!");
+      alert(
+        "Profile updated successfully! It will only show the username changes after you re-login."
+      );
     } catch (err) {
       console.error("Failed to update profile:", err);
       setUpdateStatus("failed");
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const errors = {
+      currentPassword: passwordData.currentPassword
+        ? ""
+        : "Current password is required",
+      newPassword: passwordData.newPassword ? "" : "New password is required",
+      confirmPassword: passwordData.confirmPassword
+        ? passwordData.newPassword === passwordData.confirmPassword
+          ? ""
+          : "Passwords do not match"
+        : "Confirm new password is required",
+    };
+
+    setPasswordErrors(errors);
+
+    if (Object.values(errors).some((error) => error !== "")) {
+      return;
+    }
+
+    try {
+      await dispatch(changeUserPassword(passwordData)).unwrap();
+      alert("Password changed successfully.");
+    } catch (err) {
+      console.error("Failed to change password:", err);
+      alert("Failed to change password.");
     }
   };
 
@@ -89,7 +140,7 @@ const Profile: React.FC = () => {
       <MiniNav />
       <NavBar />
       <div className="profile-container">
-        <h1>Your Profile</h1>
+        <h2>Your Profile</h2>
         {status === "loading" ? (
           <p>Loading...</p>
         ) : (
@@ -115,6 +166,56 @@ const Profile: React.FC = () => {
               />
 
               <button type="submit">Update Profile</button>
+            </form>
+
+            <form
+              onSubmit={handleChangePassword}
+              className="password-change-form"
+            >
+              <label htmlFor="currentPassword">Current Password:</label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                placeholder="currentPassword"
+                value={passwordData.currentPassword}
+                onChange={handlePasswordChange}
+              />
+              {passwordErrors.currentPassword && (
+                <p className="error-message">
+                  {passwordErrors.currentPassword}
+                </p>
+              )}
+
+              <label htmlFor="newPassword">New Password:</label>
+              <input
+                type="password"
+                id="newPassword"
+                placeholder="newPassword"
+                name="newPassword"
+                value={passwordData.newPassword}
+                onChange={handlePasswordChange}
+              />
+              {passwordErrors.newPassword && (
+                <p className="error-message">{passwordErrors.newPassword}</p>
+              )}
+
+              <label htmlFor="confirmPassword">Confirm New Password:</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="confirmPassword"
+                name="confirmPassword"
+                value={passwordData.confirmPassword}
+                onChange={handlePasswordChange}
+              />
+              {passwordErrors.confirmPassword && (
+                <p className="error-message">
+                  {passwordErrors.confirmPassword}
+                </p>
+              )}
+
+              <button type="submit">Change Password</button>
             </form>
           </>
         )}

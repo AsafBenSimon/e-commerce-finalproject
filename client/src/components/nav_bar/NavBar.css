@@ -121,3 +121,15 @@
 .body-content {
   margin-top: 60px; /* Adjust this based on the height of your navbar */
 }
+.main-Name-Link {
+  text-decoration: none;
+  color: inherit; /* Retains the original color */
+}
+
+.main-Name-Link:visited {
+  color: inherit; /* Ensures the color stays the same after clicking */
+}
+
+.main-Name-Link:hover {
+  cursor: pointer;
+}

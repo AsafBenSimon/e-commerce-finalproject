@@ -22,30 +22,23 @@ const reviewSchema = new mongoose.Schema({
   },
 });
 
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
+const productSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String },
+    image: { type: String },
+    rating: { type: Number, default: 1, min: 1, max: 5 }, // Rating should be between 1 and 5
+    sale: { type: Number, default: 0 }, // Sale percentage
+    status: { type: String, default: "NEW" }, // Status like "NEW", "SALE"
+    showStatus: { type: Boolean, default: false }, // Whether to show status
+    showSale: { type: Boolean, default: false }, // Whether to show sale
+    reviews: [reviewSchema], // Use the review schema here
   },
-  price: {
-    type: Number,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String, // Store URL or file path to the image
-    required: true,
-  },
-  reviews: [reviewSchema], // Embedding reviews
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Product = mongoose.model("Product", productSchema);
 

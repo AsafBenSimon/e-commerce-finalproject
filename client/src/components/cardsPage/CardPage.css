@@ -1,6 +1,7 @@
 .card-page-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Aligns children vertically */
+  align-items: center; /* Centers children horizontally */
 }
 
 .CardPage {
@@ -9,4 +10,37 @@
   row-gap: 50px;
   flex-wrap: wrap;
   max-width: 1050px;
+}
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 100px;
+}
+
+.pagination button {
+  background-color: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: #fff;
+  color: var(--red);
+}
+
+.pagination button.active {
+  background-color: #fff;
+  color: var(--red);
+  border: 2px solid var(--red);
+}
+
+.pagination button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
 }

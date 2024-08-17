@@ -2,7 +2,7 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../api/axios";
-import type { Order, Product, User } from "./userTypes";
+import type { ChangePasswordData, Order, Product, User } from "./userTypes";
 
 const API_URL = "http://localhost:3000/api";
 
@@ -65,3 +65,33 @@ export const fetchProducts = createAsyncThunk<
     return rejectWithValue("Failed to fetch products");
   }
 });
+
+export const changeUserPassword = createAsyncThunk<
+  void,
+  ChangePasswordData,
+  { rejectValue: string }
+>(
+  "user/changeUserPassword",
+  async ({ currentPassword, newPassword }, { rejectWithValue }) => {
+    try {
+      await axios.put<void>(
+        `${API_URL}/auth/change-password`,
+        { currentPassword, newPassword },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is set correctly
+          },
+        }
+      );
+    } catch (error) {
+      // Type-cast the error to Error and extract the error message
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data?.message || "Failed to change password"
+        );
+      }
+      return rejectWithValue("Failed to change password");
+    }
+  }
+);

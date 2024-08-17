@@ -8,7 +8,7 @@ import {
   fetchProducts,
 } from "../../app/features/user/userThunk";
 import "./LastOrders.css";
-import { Order, Product } from "../../app/features/user/userTypes";
+import { Order } from "../../app/features/user/userTypes";
 
 const LastOrders: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -34,9 +34,14 @@ const LastOrders: React.FC = () => {
     fetchData(); // Fetch orders and products on component mount
   }, [dispatch]);
 
-  const getProductName = (productId: string): string => {
+  const getProductDetails = (productId: string) => {
     const product = products.find((p) => p._id === productId);
-    return product ? product.name : "Unknown Product";
+    return (
+      product || {
+        name: "Unknown Product",
+        description: "No description available",
+      }
+    );
   };
 
   return (
@@ -49,30 +54,48 @@ const LastOrders: React.FC = () => {
       ) : (
         <>
           {pastOrders.length > 0 ? (
-            <ul>
+            <ul className="order-list">
               {pastOrders.map((order: Order) => (
                 <li key={order.id} className="order-item">
-                  <div>
-                    <strong>Order ID:</strong> {order._id}
-                  </div>
-                  <div>
-                    <strong>Total Price:</strong> ${order.totalPrice}
-                  </div>
-                  <div>
-                    <strong>Order Date:</strong>{" "}
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </div>
-                  <div>
-                    <strong>Products:</strong>
-                    <ul>
-                      {order.products.map((product, index) => (
-                        <li key={product._id || `${order.id}-${index}`}>
-                          {/* Use product._id if available; otherwise use a combination of order ID and index */}
-                          Product Name: {getProductName(product.productId)},
-                          Quantity: {product.quantity}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="order-details">
+                    <div>
+                      <strong>Order ID:</strong> {order._id}
+                    </div>
+                    <div>
+                      <strong>Order Date:</strong>{" "}
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </div>
+                    <div>
+                      <strong>Products:</strong>
+                      <ul className="product-list">
+                        {order.products.map((product, index) => {
+                          const productDetails = getProductDetails(
+                            product.productId
+                          );
+                          return (
+                            <li
+                              key={product._id || `${order.id}-${index}`}
+                              className="product-item"
+                            >
+                              <div>
+                                <strong>Product Name:</strong>{" "}
+                                {productDetails.name}
+                              </div>
+                              <div>
+                                <strong>Description:</strong>{" "}
+                                {productDetails.description}
+                              </div>
+                              <div>
+                                <strong>Quantity:</strong> {product.quantity}
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <div>
+                        <strong>Total Price:</strong> ${order.totalPrice}
+                      </div>
+                    </div>
                   </div>
                 </li>
               ))}

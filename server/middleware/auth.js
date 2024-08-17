@@ -14,17 +14,15 @@ export const authenticateUser = async (req, res, next) => {
       return res.status(401).send({ msg: "Unauthorized" });
     }
 
-    // Fetch user details from the database
     const user = await User.findById(decoded.user.id);
     if (!user) {
       return res.status(401).send({ msg: "Unauthorized" });
     }
 
-    // Copy user data from decoded token and database to req.user
     req.user = {
       ...decoded.user,
       email: user.email,
-      role: user.role, // Add the email fetched from the database
+      role: user.role,
     };
 
     next();

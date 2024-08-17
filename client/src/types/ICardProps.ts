@@ -1,15 +1,14 @@
 // src/types/ICardProps.ts
-interface ICardProps {
-  id?: number;
+export default interface ICardProps {
+  id: string; // Ensure id is always a string
   productName: string;
   price: number;
   sale: number;
-  showSale: boolean; // Optional boolean to control sale visibility
+  showSale: boolean;
   status: string;
-  showStatus: boolean; // Optional boolean to control status visibility
+  showStatus: boolean;
   img: string;
   alt: string;
   rating: number;
+  onClick?: () => void; // Optional onClick prop
 }
-
-export default ICardProps;

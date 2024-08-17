@@ -1,12 +1,15 @@
 /* Profile container */
 .profile-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   padding-top: 250px;
   color: #ffffff; /* White text for contrast */
   padding-bottom: 60px;
 }
 
 /* Heading */
-.profile-container h1 {
+.profile-container h2 {
   color: var(--red);
   font-size: 2em;
   margin-bottom: 20px;

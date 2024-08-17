@@ -92,7 +92,7 @@ const MiniNav: React.FC = () => {
             )}
           </div>
         ) : (
-          <Link to="/sign-in">My Account</Link>
+          <Link to="/sign-in">Please Login</Link>
         )}
       </div>
     </div>

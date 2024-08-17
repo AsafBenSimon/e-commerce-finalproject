@@ -13,12 +13,12 @@ const Card: React.FC<ICardProps> = ({
   img,
   alt,
   rating,
+  onClick,
 }) => {
-  // Function to generate star elements
   const generateStars = (rating: number, count: number = 5) => {
     const stars = [];
     for (let i = 0; i < count; i++) {
-      const isFilled = i < rating; // Check if the star should be filled
+      const isFilled = i < rating;
       stars.push(
         <span
           key={i}
@@ -30,30 +30,21 @@ const Card: React.FC<ICardProps> = ({
   };
 
   return (
-    <>
-      <div className="card">
-        <div className="newOrSale">
-          <div className="newOrSale">
-            {showSale && sale !== undefined && (
-              <div className="sale">-{sale}%</div>
-            )}
-            {showStatus && status && <div className="new">{status}</div>}
-          </div>
-        </div>
-        <img src={img} alt={alt} />
-        <div className="lowerCard"></div>
-        <p className="product-name">{productName}</p>
-        <p className="price">₪{price}</p>
-        <hr /> {/* Horizontal line */}
-        <div className="rating-stars">
-          {generateStars(rating, 5)}{" "}
-          {/* Display 5 stars; adjust count as needed */}
-        </div>
-        <div className="addToCart">
-          <p>add to cart</p>
-        </div>
+    <div className="card">
+      {/* Image */}
+      <img src={img} alt={alt} />
+      <div className="newOrSale">
+        {showSale && sale !== undefined && <div className="sale">-{sale}%</div>}
+        {showStatus && status && <div className="new">{status}</div>}
       </div>
-    </>
+      <p className="product-name">{productName}</p>
+      <p className="price">₪{price}</p>
+      <hr />
+      <div className="rating-stars">{generateStars(rating, 5)}</div>
+      <div className="addToCart" onClick={onClick}>
+        <p>Add to Cart</p>
+      </div>
+    </div>
   );
 };
 

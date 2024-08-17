@@ -9,6 +9,9 @@ export interface User {
 }
 
 export interface Product {
+  price: number;
+  productName: any;
+  description: ReactNode;
   _id: string;
   id: string;
   name: any;
@@ -30,4 +33,8 @@ export interface UserState {
   products: Product[]; // Ensure this property is correctly defined
   error: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
+}
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
 }

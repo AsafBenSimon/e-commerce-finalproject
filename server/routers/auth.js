@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import User from "../models/users.js";
+import { authenticateUser } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -119,6 +120,36 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ message: "Logged out successfully" });
+});
+
+// Route to change user password
+router.put("/change-password", authenticateUser, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  console.log("Change Password Request:", { currentPassword, newPassword });
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    await user.save();
+
+    console.log("Password updated successfully for user:", user._id);
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error in change-password route:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 export default router;
