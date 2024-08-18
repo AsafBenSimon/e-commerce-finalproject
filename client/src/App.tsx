@@ -7,8 +7,10 @@ import ShopNav from "./components/shopNav/ShopNav";
 import CardPage from "./components/cardsPage/CardPage";
 import AboutUs from "./components/aboutUs/aboutUs";
 import SignIn from "./components/pages/SignIn/SignIn";
-import Register from "./components/pages/Register/Register"; // Import Register component
+import Register from "./components/pages/Register/Register";
 import Profile from "./components/pages/Profile/Profile";
+import CartPage from "./components/pages/CartPage/Cart"; // Import CartPage component
+import Cart from "./components/pages/CartPage/Cart";
 
 function App() {
   return (
@@ -29,8 +31,9 @@ function App() {
           />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />{" "}
-          {/* Add route for Profile */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/cart" element={<Cart />} />
+          {/* Add route for CartPage */}
         </Routes>
       </div>
     </Router>

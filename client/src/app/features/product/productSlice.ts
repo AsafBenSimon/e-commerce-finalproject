@@ -1,17 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+// src/app/features/product/productSlice.ts
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchProducts } from "./productThunk";
-import { Product } from "./Product"; // Adjust path as necessary
+import { Product } from "./Product";
 
 interface ProductState {
-  items: Product[];
+  items: any;
+  products: Product[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ProductState = {
-  items: [],
+  products: [],
   loading: false,
   error: null,
+  items: undefined,
 };
 
 const productSlice = createSlice({
@@ -24,13 +27,16 @@ const productSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.loading = false;
-      })
+      .addCase(
+        fetchProducts.fulfilled,
+        (state, action: PayloadAction<Product[]>) => {
+          state.products = action.payload;
+          state.loading = false;
+        }
+      )
       .addCase(fetchProducts.rejected, (state, action) => {
+        state.error = action.payload as string;
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch products";
       });
   },
 });
