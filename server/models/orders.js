@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 import Joi from "joi";
 import JoiObjectId from "joi-objectid";
 
+// Define Joi ObjectId
 Joi.objectId = JoiObjectId(Joi);
 
+// Order Schema
 const orderSchema = new mongoose.Schema(
   {
     user: {
@@ -37,6 +39,34 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+// Cart Item Schema
+const cartItemSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-export default Order;
+// Create Models
+const Order = mongoose.model("Order", orderSchema);
+const CartItem = mongoose.model("CartItem", cartItemSchema);
+
+// Export Models
+export { Order, CartItem };

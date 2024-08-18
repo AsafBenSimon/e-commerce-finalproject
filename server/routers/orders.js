@@ -1,5 +1,5 @@
 import express from "express";
-import Order from "../models/orders.js";
+import { Order, CartItem } from "../models/orders.js"; // Import both Order and CartItem
 import { authenticateUser } from "../middleware/auth.js";
 import User from "../models/users.js";
 
@@ -78,6 +78,64 @@ router.post("/checkout", authenticateUser, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server Error" });
+  }
+});
+
+// Add item to cart (create a new 'order' as an 'in-progress' cart)
+// Add item to cart
+// Add item to cart
+router.post("/addToCart", authenticateUser, async (req, res) => {
+  try {
+    const { productId, name, price, quantity, image } = req.body;
+
+    // Validate the request body
+    if (!productId || !name || !price || !quantity || !image) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Create a new cart item
+    const newCartItem = new CartItem({
+      user: req.user.id, // Assuming `req.user.id` is the authenticated user
+      productId,
+      name,
+      price,
+      quantity,
+      image,
+    });
+
+    await newCartItem.save();
+
+    res.status(201).json(newCartItem);
+  } catch (err) {
+    console.error(err); // Log error for debugging
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// src/routers/orders.js
+router.get("/my-cart", authenticateUser, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const cartItems = await CartItem.findOne({ user: userId }).populate({
+      path: "products.productId",
+      select: "name price image", // Adjust fields as needed
+    });
+
+    if (!cartItems) return res.status(404).json({ message: "Cart not found" });
+
+    // Map cart items to include product details
+    const detailedCartItems = cartItems.products.map((product) => ({
+      productId: product.productId._id,
+      name: product.productId.name,
+      price: product.productId.price,
+      image: product.productId.image,
+      quantity: product.quantity,
+      total: product.price * product.quantity, // Calculate total price for the product
+    }));
+
+    res.status(200).json(detailedCartItems);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
