@@ -81,4 +81,49 @@ router.post("/checkout", authenticateUser, async (req, res) => {
   }
 });
 
+// Add an item to the cart
+router.post("/cart", authenticateUser, async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+    const userId = req.user.id;
+
+    if (!productId || !quantity) {
+      return res
+        .status(400)
+        .json({ message: "Product ID and quantity are required" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Initialize cart if it doesn't exist
+    if (!user.cart) {
+      user.cart = [];
+    }
+
+    // Find if the item already exists in the cart
+    const existingCartItem = user.cart.find(
+      (item) => item.productId.toString() === productId
+    );
+
+    if (existingCartItem) {
+      // Update the quantity if the item already exists
+      existingCartItem.quantity += quantity;
+    } else {
+      // Add new item to the cart
+      user.cart.push({ productId, quantity });
+    }
+
+    // Save the user with the updated cart
+    await user.save();
+
+    res.status(200).json({ message: "Item added to cart", cart: user.cart });
+  } catch (err) {
+    console.error("Error adding item to cart:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+});
+
 export default router;
