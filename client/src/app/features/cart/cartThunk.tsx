@@ -10,18 +10,14 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (cartItem: CartItem, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token"); // or however you store your token
       const response = await axios.post(
         `https://e-commerce-finalproject-server.onrender.com/api/orders/cart`,
         cartItem,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          withCredentials: true, // Ensure cookies are sent with the request
         }
       );
-      return response.data;
+      return response.data; // Expecting the updated cart in the response
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data || "Failed to add item to cart"
