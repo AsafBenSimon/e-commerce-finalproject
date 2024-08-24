@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import "./MiniNav.css";
 
-const LOGOUT_URL = "http://localhost:3000/api/auth/logout";
+const LOGOUT_URL =
+  "https://e-commerce-finalproject-server.onrender.com/api/auth/logout";
 
 const MiniNav: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
