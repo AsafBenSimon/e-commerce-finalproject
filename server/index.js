@@ -10,7 +10,12 @@ import ordersRouter from "./routers/orders.js";
 dotenv.config();
 
 const app = express();
-app.use(cors({}));
+app.use(
+  cors({
+    origin: "https://e-commerce-finalproject-client.onrender.com", // Allow requests from your frontend URL
+    credentials: true, // Allow cookies to be sent with the requests
+  })
+);
 
 app.use(express.json());
 
