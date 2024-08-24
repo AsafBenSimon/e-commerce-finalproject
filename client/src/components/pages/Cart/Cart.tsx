@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../../app/store";
 import {
@@ -7,10 +7,21 @@ import {
   loadCartItems,
 } from "../../../app/features/cart/cartThunk";
 import "./Cart.css";
+import { CartItem } from "../../../app/features/cart/cartTypes";
 
 const CartPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItemsFromStore = useSelector(
+    (state: RootState) => state.cart.items
+  );
+
+  // Local state for cart items
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Sync local state with Redux store
+  useEffect(() => {
+    setCartItems(cartItemsFromStore);
+  }, [cartItemsFromStore]);
 
   // Load cart items from local storage on component mount
   useEffect(() => {
@@ -26,7 +37,14 @@ const CartPage: React.FC = () => {
 
   const handleRemoveFromCart = (productId: string) => {
     console.log("Removing item with Product ID:", productId);
-    dispatch(removeFromCart(productId));
+    dispatch(removeFromCart(productId))
+      .unwrap()
+      .then((updatedCartItems) => {
+        setCartItems(updatedCartItems); // Update local state
+      })
+      .catch((error) => {
+        console.error("Failed to remove item:", error);
+      });
   };
 
   // Calculate total cost
@@ -44,7 +62,8 @@ const CartPage: React.FC = () => {
 
     try {
       await dispatch(checkout(payload)).unwrap(); // Unwrap to handle errors
-      // Optional: Add a success message or redirect here
+      setCartItems([]); // Clear local state
+      localStorage.removeItem("cartItems"); // Clear local storage
     } catch (error) {
       console.error("Checkout failed:", error);
       // Optional: Show an error message to the user

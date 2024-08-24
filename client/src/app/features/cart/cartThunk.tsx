@@ -84,6 +84,7 @@ export const fetchProductAndAddToCart = createAsyncThunk(
   }
 );
 
+// Checkout
 export const checkout = createAsyncThunk(
   "cart/checkout",
   async (
@@ -92,7 +93,7 @@ export const checkout = createAsyncThunk(
   ) => {
     try {
       await axios.post("http://localhost:3000/api/orders/checkout", payload);
-      dispatch(clearCart()); // Clear the cart after successful checkout
+      dispatch(clearCart()); // Clear the cart in Redux store
     } catch (error) {
       console.error("Checkout failed:", error);
       throw error; // Rethrow the error to handle it in the component
