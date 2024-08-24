@@ -11,7 +11,7 @@ export const addToCart = createAsyncThunk(
   async (cartItem: CartItem, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/orders/cart`,
+        `https://e-commerce-finalproject-server.onrender.com/api/orders/cart`,
         cartItem
       );
       return response.data; // Expecting the updated cart in the response
@@ -28,7 +28,9 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/orders/cart`);
+      const response = await axios.get(
+        `https://e-commerce-finalproject-server.onrender.com/api/orders/cart`
+      );
       return response.data; // Expecting the cart items in the response
     } catch (error: any) {
       return rejectWithValue(
@@ -46,7 +48,7 @@ export const removeFromCart = createAsyncThunk(
   async (productId: string, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/orders/update/${productId}`
+        `https://e-commerce-finalproject-server.onrender.com/api/orders/update/${productId}`
       );
       return response.data.cart;
     } catch (error) {
@@ -63,7 +65,9 @@ export const fetchProductAndAddToCart = createAsyncThunk(
   "cart/fetchProductAndAddToCart",
   async (productId: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/products/${productId}`);
+      const response = await axios.get(
+        `https://e-commerce-finalproject-server.onrender.com/api/products/${productId}`
+      );
       const product = response.data;
 
       const cartItem: CartItem = {
@@ -92,7 +96,10 @@ export const checkout = createAsyncThunk(
     { dispatch }
   ) => {
     try {
-      await axios.post("http://localhost:3000/api/orders/checkout", payload);
+      await axios.post(
+        "https://e-commerce-finalproject-server.onrender.com/api/orders/checkout",
+        payload
+      );
       dispatch(clearCart()); // Clear the cart in Redux store
     } catch (error) {
       console.error("Checkout failed:", error);

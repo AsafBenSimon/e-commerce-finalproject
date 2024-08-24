@@ -3,12 +3,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Product } from "./Product";
 
-const API_URL = "http://localhost:3000/api/products";
+const API_URL =
+  "https://e-commerce-finalproject-server.onrender.com/api/products";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("http://localhost:3000/api/products/list");
+    const response = await axios.get(
+      "https://e-commerce-finalproject-server.onrender.com/api/products/list"
+    );
     return response.data;
   }
 );
