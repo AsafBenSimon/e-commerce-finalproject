@@ -53,29 +53,31 @@ const MiniNav: React.FC = () => {
     }
 
     navigate("/sign-in");
+    window.location.reload(); // Refresh the page after logout
   };
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
   return (
     <div className="MiniNav">
       <div className="us-info">
         <div className="phone">
-          <img src="assets/icons/phone.svg" alt="Phone" />
+          <img src="/assets/icons/phone.svg" alt="Phone" />
           <p>0503555555</p>
         </div>
         <div className="email">
-          <img src="assets/img/email.png" alt="Email" />
+          <img src="/assets/img/email.png" alt="Email" />
           <p>asaf@gmail.com</p>
         </div>
         <div className="location">
-          <img src="assets/icons/location.svg" alt="Location" />
+          <img src="/assets/icons/location.svg" alt="Location" />
           <p>Qiryat Ono, Levi Eskol 78</p>
         </div>
       </div>
       <div className="your-info">
-        <img src="assets/icons/user.svg" alt="User" />
+        <img src="/assets/icons/user.svg" alt="User" />
         {isLoggedIn ? (
           <div className="welcome-container">
             <span className="welcome-text" onClick={toggleDropdown}>

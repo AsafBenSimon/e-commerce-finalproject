@@ -13,7 +13,7 @@
   z-index: 2000; /* Higher z-index to ensure it appears above the NavBar */
 }
 
-@media (max-width: 1145px) {
+@media (max-width: 1229px) {
   .MiniNav {
     gap: 21px;
   }

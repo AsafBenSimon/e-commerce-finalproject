@@ -1,8 +1,21 @@
 import React from "react";
-import "./NavBar.css";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectTotalCartItems } from "../../app/features/cart/cartSlice";
+import { RootState } from "../../app/store";
+import { setSearchInput } from "../../app/features/product/productSlice";
+import "./NavBar.css";
 
-function NavBar() {
+const NavBar: React.FC = () => {
+  const dispatch = useDispatch(); // Get dispatch function
+  const totalItems = useSelector(selectTotalCartItems);
+  const searchInput = useSelector(
+    (state: RootState) => state.product.searchInput
+  );
+  const filteredProducts = useSelector(
+    (state: RootState) => state.product.filteredProducts
+  );
+
   return (
     <div className="NavBar">
       <div className="container2">
@@ -13,19 +26,47 @@ function NavBar() {
         </h1>
         <div className="NavBar-MiniContainer">
           <div className="NavBar-Search">
-            <input className="Search" type="text" placeholder="Search here" />
+            <input
+              className="Search"
+              type="text"
+              placeholder="Search here"
+              value={searchInput}
+              onChange={(e) => dispatch(setSearchInput(e.target.value))} // Use dispatch here
+            />
             <button className="search-button" type="button">
               Search
             </button>
+            {searchInput && filteredProducts.length > 0 && (
+              <div className="search-results">
+                {filteredProducts.map((product) => (
+                  <Link
+                    key={product._id}
+                    to={`/product/${product._id}`}
+                    className="search-result-item"
+                  >
+                    {product.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
           <div className="NavBar-Cart">
-            <img className="svg-cart" src="assets/img/cart.png" alt="Cart" />
-            <span>Your Cart</span>
+            <Link to="/cart" className="cart-link">
+              <img
+                className="svg-cart"
+                src="/assets/img/cart.png" // Correct path
+                alt="Cart"
+              />
+              <span>
+                <span className="cart-text">Your Cart</span>
+                <span className="cart-count">{totalItems}</span>
+              </span>
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default NavBar;

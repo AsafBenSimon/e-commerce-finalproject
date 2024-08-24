@@ -6,7 +6,7 @@
   width: 100%;
   margin-bottom: 80px;
 }
-@media (max-width: 1145px) {
+@media (max-width: 1229px) {
   .shop-nav {
     margin-top: 250px;
   }
@@ -35,6 +35,10 @@
   width: 0%;
   background-color: var(--red);
   transition: width 0.2s ease; /* Smooth transition for width change */
+}
+
+.red-line-container a {
+  text-decoration: none;
 }
 
 .red-line-container:hover .red-line {

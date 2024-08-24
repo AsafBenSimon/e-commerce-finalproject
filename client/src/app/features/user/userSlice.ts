@@ -5,7 +5,8 @@ import {
   fetchProducts,
   updateUserProfile,
 } from "./userThunk";
-import type { User, Order, Product } from "./userTypes";
+import type { User, Order } from "./userTypes";
+import { Product } from "../product/Product";
 
 interface UserState {
   profile: User | null;

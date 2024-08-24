@@ -11,7 +11,7 @@ router.post("/", [authenticateUser, isAdmin], async (req, res) => {
     name,
     price,
     description,
-    image,
+    img,
     rating,
     sale,
     status,
@@ -33,7 +33,7 @@ router.post("/", [authenticateUser, isAdmin], async (req, res) => {
       name,
       price,
       description,
-      image,
+      img,
       rating: finalRating,
       sale: sale || 0, // Default sale to 0 if not provided
       status: status || "", // Default status to empty string if not provided
@@ -206,5 +206,33 @@ router.delete(
     }
   }
 );
+
+// GET /api/products/:id
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Route to get products with showSale set to true
+router.get("/sales", async (req, res) => {
+  try {
+    // Find products where the `sale` field is greater than 0
+    const saleProducts = await Product.find({ sale: { $gt: 0 } });
+    res.status(200).json(saleProducts);
+  } catch (error) {
+    console.error("Error fetching sale products:", error); // Log the full error
+    res.status(500).json({
+      message: "Server Error",
+      error: error.message || "An unknown error occurred",
+    });
+  }
+});
 
 export default router;

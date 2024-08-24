@@ -1,0 +1,21 @@
+.hot-deals-page {
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+.products-container {
+  display: flex;
+  margin-top: 50px;
+  flex-wrap: wrap; /* Allows wrapping to the next line if there are too many items */
+  gap: 20px; /* Adds space between items */
+  justify-content: center; /* Center the items horizontally */
+}
+
+.product-card {
+  box-sizing: border-box;
+  max-width: 300px; /* Set a max-width for the cards */
+}
+
+.hot-deals-page h2 {
+  text-align: center;
+}

@@ -85,6 +85,7 @@ hr {
   position: absolute; /* Ensures button stays at the bottom */
   bottom: 0;
   left: 0;
+  border: none;
   width: 100%;
   background-color: var(--red);
   color: #fff;

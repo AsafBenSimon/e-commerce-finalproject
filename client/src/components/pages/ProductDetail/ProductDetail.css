@@ -1,0 +1,71 @@
+/* ProductDetail.css */
+.product-detail {
+  max-width: 800px; /* Adjusted width for better centering */
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  text-align: center; /* Center-aligns text and inline elements */
+}
+
+.product-detail h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.product-detail img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.product-detail p {
+  font-size: 1.125rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.product-detail p:first-of-type {
+  font-weight: bold;
+}
+
+.product-detail .price {
+  font-size: 1.5rem;
+  color: #e60023; /* Example color for price */
+  margin-top: 10px;
+}
+
+.product-detail .rating {
+  font-size: 1.125rem;
+  color: #f1c40f; /* Example color for rating */
+  margin-top: 10px;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  background-color: #ff0000; /* Red color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding around the text */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.add-to-cart-button:hover {
+  background-color: white; /* Darker shade on hover */
+  color: var(--red);
+}
+
+.add-to-cart-button:active {
+  transform: scale(0.98); /* Slight scale down effect when button is clicked */
+}
+
+.add-to-cart-button:disabled {
+  background-color: #6c757d; /* Disabled button color */
+  cursor: not-allowed; /* Not-allowed cursor for disabled state */
+}

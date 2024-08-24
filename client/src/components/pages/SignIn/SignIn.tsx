@@ -31,7 +31,10 @@ const SignIn: React.FC = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("username", response.data.user.userName);
         setSuccess(true);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/", { replace: true }); // Redirect to home page
+          window.location.reload(); // Refresh the page after redirect
+        }, 100); // Short delay to ensure successful login message is displayed
       } else {
         throw new Error("Unexpected response format.");
       }
@@ -42,48 +45,51 @@ const SignIn: React.FC = () => {
       setSuccess(false);
     }
   };
+
   return (
-    <>
-      {success ? (
-        <section>
-          <h2>You are logged in!</h2>
-          <p>
-            <a href="/">Go to Home</a>
-          </p>
-        </section>
-      ) : (
-        <div className="sign-in-page">
-          <h2>Sign In</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit">Sign In</button>
-            {error && <p className="error">{error}</p>}
-          </form>
-          <p>
-            Don't have an account? <Link to="/register">Register here</Link>
-          </p>
-        </div>
-      )}
-    </>
+    <div className="app-container">
+      <div className="sign-in-page">
+        {success ? (
+          <section>
+            <h2>You are logged in!</h2>
+            <p>
+              <Link to="/">Go to Home</Link>
+            </p>
+          </section>
+        ) : (
+          <>
+            <h2>Sign In</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit">Sign In</button>
+              {error && <p className="error">{error}</p>}
+            </form>
+            <p>
+              Don't have an account? <Link to="/register">Register here</Link>
+            </p>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 

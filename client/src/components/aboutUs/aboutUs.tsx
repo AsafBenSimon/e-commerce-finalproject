@@ -7,13 +7,13 @@ function AboutUs() {
       <div className="about-us-details">
         <span className="about-us-title">ABOUT US</span>
         <p className="about-us-description">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut.
+          We are a small company that wants to provide the best products at the
+          best prices, as we ourselves are gamers.
         </p>
         <div className="about-us-contact">
           <img
             className="contact-icon"
-            src="assets/icons/location.svg"
+            src="/assets/icons/location.svg"
             alt="Location icon"
           />
           <span className="contact-info">qiryat ono levi eskol 78</span>
@@ -21,7 +21,7 @@ function AboutUs() {
         <div className="about-us-contact">
           <img
             className="contact-icon"
-            src="assets/icons/phone.svg"
+            src="/assets/icons/phone.svg"
             alt="Phone icon"
           />
           <span className="contact-info">0503555555</span>
@@ -29,7 +29,7 @@ function AboutUs() {
         <div className="about-us-contact">
           <img
             className="contact-icon"
-            src="assets/img/email.png"
+            src="/assets/img/email.png"
             alt="Email icon"
           />
           <span className="contact-info">asaf@email.com</span>
@@ -37,7 +37,7 @@ function AboutUs() {
       </div>
       <div className="about-us-service">
         <span className="service-title">SERVICE</span>
-        <span className="service-link my-account"> My Account</span>
+        <span className="service-link my-profile"> My Profile</span>
         <span className="service-link">View Cart</span>
       </div>
     </div>

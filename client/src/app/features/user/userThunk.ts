@@ -2,7 +2,8 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../api/axios";
-import type { ChangePasswordData, Order, Product, User } from "./userTypes";
+import type { ChangePasswordData, Order, User } from "./userTypes";
+import { Product } from "../product/Product";
 
 const API_URL = "http://localhost:3000/api";
 

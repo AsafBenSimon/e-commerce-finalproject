@@ -37,7 +37,9 @@ const Register: React.FC = () => {
 
       if (response.status === 201) {
         setSuccess(true);
-        navigate("/sign-in"); // Redirect to sign-in page after successful registration
+        setTimeout(() => {
+          navigate("/sign-in"); // Redirect to sign-in page after successful registration
+        }, 1000); // Delay to allow the success message to display
       } else {
         // Handle unexpected responses
         throw new Error(response.data.message || "Unexpected error occurred.");
@@ -53,47 +55,49 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="register-page">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="userName">Username:</label>
-          <input
-            type="text"
-            id="userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Register</button>
-        {error && <p className="error">{error}</p>}
-        {success && (
-          <p className="success">
-            Registration successful! Redirecting to sign-in page...
-          </p>
-        )}
-      </form>
+    <div className="app-container">
+      <div className="register-page">
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="userName">Username:</label>
+            <input
+              type="text"
+              id="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit">Register</button>
+          {error && <p className="error">{error}</p>}
+          {success && (
+            <p className="success">
+              Registration successful! Redirecting to sign-in page...
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

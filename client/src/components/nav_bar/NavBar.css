@@ -18,7 +18,7 @@
   width: 100%;
 }
 
-@media (max-width: 1145px) {
+@media (max-width: 1228px) {
   .container2 {
     flex-direction: column;
     align-items: center;
@@ -69,6 +69,7 @@
 
 .NavBar-Search {
   display: flex;
+  position: relative; /* To position the search results dropdown */
 }
 
 .search-button {
@@ -93,6 +94,9 @@
   flex-direction: column;
   align-items: center;
 }
+.NavBar-Cart a {
+  text-decoration: none;
+}
 
 .NavBar-Cart span {
   font-weight: 500;
@@ -113,10 +117,6 @@
   fill: white;
 }
 
-.NavBar-Cart:hover span {
-  color: var(--red);
-}
-
 /* Add some top margin to the rest of the content to avoid it being hidden under the navbar */
 .body-content {
   margin-top: 60px; /* Adjust this based on the height of your navbar */
@@ -132,4 +132,68 @@
 
 .main-Name-Link:hover {
   cursor: pointer;
+}
+
+.cart-count {
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+}
+
+.svg-cart {
+  margin-right: 5px; /* Space between the cart icon and text */
+}
+
+.cart-count {
+  margin-left: 5px; /* Space between the "Your Cart" text and count */
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cart-link:hover,
+.cart-link:visited,
+.cart-link:active {
+  color: inherit; /* Prevents color change on hover, visited, and active states */
+  text-decoration: none; /* Ensures underline doesn't appear */
+}
+
+.NavBar-Cart:hover .cart-text {
+  color: red; /* Change the "Your Cart" text to red */
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure dropdown is above other elements */
+}
+
+.search-result-item {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
 }

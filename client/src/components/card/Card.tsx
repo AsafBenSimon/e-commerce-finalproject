@@ -1,10 +1,10 @@
-// src/components/Card.tsx
-import React from "react";
+import React, { useState } from "react";
 import "./Card.css";
 import ICardProps from "../../types/ICardProps";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../app/features/cart/cartThunk"; // Adjust path if needed
-import { CartItem } from "../../app/features/cart/cartTypes"; // Adjust path if needed
+import { addToCart } from "../../app/features/cart/cartThunk";
+import { CartItem } from "../../app/features/cart/cartTypes";
+import { AppDispatch } from "../../app/store";
 
 const Card: React.FC<ICardProps> = ({
   id,
@@ -18,20 +18,38 @@ const Card: React.FC<ICardProps> = ({
   alt,
   rating,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("You need to log in or re-log in to add items to the cart.");
+      return;
+    }
+
     const cartItem: CartItem = {
-      id, // Ensure this matches your CartItem type
+      _id: id,
       productId: id,
-      productName: productName || "", // Provide default if undefined
-      price: price || 0, // Provide default if undefined
-      quantity: 1, // Default quantity
-      img: img || "", // Provide default if undefined
+      productName: productName ?? "Default Product Name",
+      price: price ?? 0,
+      quantity: 1,
+      img: img ?? "default-image-url",
     };
 
-    // Dispatch the addToCart thunk with the CartItem object
-    dispatch(addToCart(cartItem) as any);
+    setLoading(true);
+
+    try {
+      const resultAction = await dispatch(addToCart(cartItem));
+      if (addToCart.fulfilled.match(resultAction)) {
+        console.log("Item added to cart:", resultAction.payload);
+      }
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const generateStars = (rating: number, count: number = 5) => {
@@ -60,9 +78,13 @@ const Card: React.FC<ICardProps> = ({
       <p className="price">₪{price}</p>
       <hr />
       <div className="rating-stars">{generateStars(rating, 5)}</div>
-      <div className="addToCart" onClick={handleAddToCart}>
-        <p>Add to Cart</p>
-      </div>
+      <button
+        className="addToCart"
+        onClick={handleAddToCart}
+        disabled={loading}
+      >
+        {loading ? <p>Adding to Cart...</p> : <p>Add to Cart</p>}
+      </button>
     </div>
   );
 };

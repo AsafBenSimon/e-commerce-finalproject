@@ -1,5 +1,3 @@
-// src/components/newcomponant/LastOrders.tsx
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../app/store";
@@ -9,6 +7,7 @@ import {
 } from "../../app/features/user/userThunk";
 import "./LastOrders.css";
 import { Order } from "../../app/features/user/userTypes";
+import { Product } from "../../app/features/product/Product";
 
 const LastOrders: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -34,16 +33,6 @@ const LastOrders: React.FC = () => {
     fetchData(); // Fetch orders and products on component mount
   }, [dispatch]);
 
-  const getProductDetails = (productId: string) => {
-    const product = products.find((p) => p._id === productId);
-    return (
-      product || {
-        name: "Unknown Product",
-        description: "No description available",
-      }
-    );
-  };
-
   return (
     <div className="orders-section">
       <h2>Your Past Orders</h2>
@@ -56,7 +45,7 @@ const LastOrders: React.FC = () => {
           {pastOrders.length > 0 ? (
             <ul className="order-list">
               {pastOrders.map((order: Order) => (
-                <li key={order.id} className="order-item">
+                <li key={order._id} className="order-item">
                   <div className="order-details">
                     <div>
                       <strong>Order ID:</strong> {order._id}
@@ -69,21 +58,20 @@ const LastOrders: React.FC = () => {
                       <strong>Products:</strong>
                       <ul className="product-list">
                         {order.products.map((product, index) => {
-                          const productDetails = getProductDetails(
-                            product.productId
+                          // Find the product by ID
+                          const productDetails = products.find(
+                            (p: Product) => p._id === product.productId
                           );
                           return (
                             <li
-                              key={product._id || `${order.id}-${index}`}
+                              key={product.productId || `${order._id}-${index}`}
                               className="product-item"
                             >
                               <div>
                                 <strong>Product Name:</strong>{" "}
-                                {productDetails.name}
-                              </div>
-                              <div>
-                                <strong>Description:</strong>{" "}
-                                {productDetails.description}
+                                {productDetails
+                                  ? productDetails.name
+                                  : "Unknown Product"}
                               </div>
                               <div>
                                 <strong>Quantity:</strong> {product.quantity}

@@ -10,7 +10,6 @@ import {
 } from "../../../app/features/user/userThunk";
 import MiniNav from "../../miniNav/MiniNav";
 import NavBar from "../../nav_bar/NavBar";
-import AboutUs from "../../aboutUs/aboutUs";
 import LastOrders from "../../LastOrders/LastOrders";
 import "./Profile.css";
 import { User } from "../../../app/features/user/userTypes";
@@ -221,7 +220,6 @@ const Profile: React.FC = () => {
         )}
         <LastOrders /> {/* Include the LastOrders component here */}
       </div>
-      <AboutUs />
     </>
   );
 };
