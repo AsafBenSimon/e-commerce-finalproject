@@ -5,7 +5,7 @@ import axios from "../../../api/axios";
 import type { ChangePasswordData, Order, User } from "./userTypes";
 import { Product } from "../product/Product";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://e-commerce-finalproject-client.onrender.com";
 
 export const fetchUserProfile = createAsyncThunk<
   User,
