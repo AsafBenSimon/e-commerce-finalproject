@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Card.css";
 import ICardProps from "../../types/ICardProps";
 import { useDispatch } from "react-redux";
@@ -20,12 +21,14 @@ const Card: React.FC<ICardProps> = ({
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("You need to log in or re-log in to add items to the cart.");
+      alert("You need to log in to add items to the cart.");
+      navigate("/sign-in"); // Optionally, navigate the user to the login page
       return;
     }
 
@@ -50,6 +53,10 @@ const Card: React.FC<ICardProps> = ({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/product/${id}`); // Navigate to the product detail page
   };
 
   const generateStars = (rating: number, count: number = 5) => {
@@ -84,6 +91,9 @@ const Card: React.FC<ICardProps> = ({
         disabled={loading}
       >
         {loading ? <p>Adding to Cart...</p> : <p>Add to Cart</p>}
+      </button>
+      <button className="viewDetails" onClick={handleViewDetails}>
+        View Details
       </button>
     </div>
   );

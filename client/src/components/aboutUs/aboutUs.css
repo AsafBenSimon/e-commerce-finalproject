@@ -84,3 +84,6 @@
 .service-link:hover {
   color: var(--red);
 }
+.about-us-service a {
+  text-decoration: none;
+}

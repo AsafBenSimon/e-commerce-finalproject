@@ -1,6 +1,3 @@
-// src/types/cartTypes.ts
-
-// src/app/features/cart/cartTypes.ts
 export interface CartItem {
   _id: string; // Use _id instead of id
   productId: string;

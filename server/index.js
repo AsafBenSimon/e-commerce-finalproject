@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "https://e-commerce-finalproject-client.onrender.com", // Allow requests from your frontend URL
+    origin: "http://localhost:3001", // Allow requests from your frontend URL
     credentials: true, // Allow cookies to be sent with the requests
   })
 );

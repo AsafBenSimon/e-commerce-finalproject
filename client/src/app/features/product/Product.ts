@@ -16,3 +16,20 @@ export interface Product {
   showSale: boolean;
   quantity?: number; // Add quantity here if it is relevant for your product
 }
+
+export interface AddReviewPayload {
+  productId: string;
+  rating: number;
+  comment: string;
+  Username: string; // Correct property name
+}
+// Define the Review type
+export interface Review {
+  Username: string;
+  _id: string;
+  user: {
+    Username: string;
+  };
+  rating: number;
+  comment: string;
+}

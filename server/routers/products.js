@@ -65,60 +65,52 @@ router.get("/list", async (req, res) => {
   }
 });
 
-// POST /products/:productId/reviews - Add a review to a product
-router.post(
-  "/products/:productId/reviews",
-  authenticateUser,
-  async (req, res) => {
-    try {
-      const { rating, comment } = req.body;
-      const { productId } = req.params;
-      const userId = req.user.id; // Assuming req.user is set by authentication middleware
+// Route to add a review
+router.post("/:productId/reviews", authenticateUser, async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { rating, comment } = req.body;
 
-      // Validate input
-      const { error } = reviewSchema.validate({ rating, comment });
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
-
-      // Find the product by ID
-      const product = await Product.findById(productId);
-
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-
-      // Construct the new review
-      const newReview = {
-        user: userId,
-        rating,
-        comment,
-      };
-
-      // Add the review to the product's reviews array
-      product.reviews.push(newReview);
-
-      // Save the updated product document
-      await product.save();
-
-      res.status(201).json(product);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ message: "Server Error" });
+    if (!rating || !comment) {
+      return res.status(400).json({ msg: "All fields are required" });
     }
+
+    // Extract Username from the authenticated user
+    const { username } = req.user;
+
+    // Logic to add the review
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $push: { reviews: { rating, comment, username } } },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ msg: "Product not found" });
+    }
+
+    res.json(updatedProduct);
+  } catch (err) {
+    console.error("Error adding review:", err);
+    res.status(500).json({ msg: "Server error" });
   }
-);
+});
 
 // Route to get reviews for a specific product
 router.get("/:productId/reviews", async (req, res) => {
   try {
     const { productId } = req.params;
+    const { page = 1, limit = 10, sort = "createdAt" } = req.query; // Pagination and sorting parameters
 
     // Find the product by ID and populate its reviews
-    const product = await Product.findById(productId).populate(
-      "reviews.user",
-      "userName"
-    ); // Assuming reviews are stored with user references
+    const product = await Product.findById(productId)
+      .populate({
+        path: "reviews.user",
+        select: "userName", // Assuming userName is a field in your user schema
+      })
+      .sort({ [sort]: -1 }) // Sorting reviews (e.g., by date)
+      .skip((page - 1) * limit) // Pagination
+      .limit(parseInt(limit)); // Limit the number of reviews
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -133,7 +125,6 @@ router.get("/:productId/reviews", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
-
 // Update a review
 router.put(
   "/products/:productId/reviews/:reviewId",

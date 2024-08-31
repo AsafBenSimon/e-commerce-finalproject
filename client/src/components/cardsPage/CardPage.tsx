@@ -3,18 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import Card from "../card/Card";
 import { fetchProducts } from "../../app/features/product/productThunk";
 import { RootState, AppDispatch } from "../../app/store";
+import { Product } from "../../app/features/product/Product"; // Import the Product type
 import "./CardPage.css";
 
 const ITEMS_PER_PAGE = 9;
 
 const CardPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const products = useSelector((state: RootState) => state.product.items);
+  const products = useSelector((state: RootState) => state.product.products);
   const loading = useSelector((state: RootState) => state.product.loading);
   const error = useSelector((state: RootState) => state.product.error);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentItems, setCurrentItems] = useState<any[]>([]);
+  const [currentItems, setCurrentItems] = useState<Product[]>([]);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "">("");
 
@@ -84,9 +85,9 @@ const CardPage: React.FC = () => {
 
       <div className="CardPage">
         {currentItems.length > 0
-          ? currentItems.map((item, index) => (
+          ? currentItems.map((item) => (
               <Card
-                key={index}
+                key={item._id}
                 id={item._id}
                 productName={item.name}
                 price={item.price}
@@ -96,7 +97,7 @@ const CardPage: React.FC = () => {
                 showStatus={item.showStatus}
                 img={`/assets/img/${item.image}`}
                 alt={item.name}
-                rating={item.rating}
+                rating={item.rating || 0} // Provide default value if rating is undefined
               />
             ))
           : !loading && <p>No products available.</p>}

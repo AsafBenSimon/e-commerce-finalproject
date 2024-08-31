@@ -106,3 +106,29 @@ hr {
   color: var(--red);
   border: 2px solid var(--red);
 }
+
+.viewDetails {
+  background-color: white; /* White background for contrast */
+  color: var(--red); /* Text color set to red */
+  border: 2px solid var(--red);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.viewDetails:hover {
+  background-color: var(--red); /* Red background on hover */
+  color: white; /* White text on hover */
+}
+
+.viewDetails:active {
+  background-color: darkred; /* Darker red on active state */
+  border-color: darkred;
+}
+
+.viewDetails:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--red);
+}

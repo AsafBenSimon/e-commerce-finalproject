@@ -3,19 +3,14 @@ import axios from "axios";
 import { CartItem } from "./cartTypes";
 import { clearCart } from "./cartSlice";
 
-// Define the base URL for your API
-
 // Add item to cart
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (cartItem: CartItem, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://e-commerce-finalproject-server.onrender.com/api/orders/cart`,
-        cartItem,
-        {
-          withCredentials: true, // Ensure cookies are sent with the request
-        }
+        `http://localhost:3000/api/orders/cart`,
+        cartItem
       );
       return response.data; // Expecting the updated cart in the response
     } catch (error: any) {
@@ -31,9 +26,7 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `https://e-commerce-finalproject-server.onrender.com/api/orders/cart`
-      );
+      const response = await axios.get(`http://localhost:3000/api/orders/cart`);
       return response.data; // Expecting the cart items in the response
     } catch (error: any) {
       return rejectWithValue(
@@ -43,17 +36,15 @@ export const fetchCartItems = createAsyncThunk(
   }
 );
 
-// Define a type for the error response
-
 // Thunk to remove an item from the cart
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (productId: string, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://e-commerce-finalproject-server.onrender.com/api/orders/update/${productId}`
+        `http://localhost:3000/api/orders/update/${productId}`
       );
-      return response.data.cart;
+      return response.data.cart; // Assuming the updated cart is returned
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return rejectWithValue(
@@ -64,19 +55,19 @@ export const removeFromCart = createAsyncThunk(
     }
   }
 );
+
+// Thunk to fetch a product and add it to the cart
 export const fetchProductAndAddToCart = createAsyncThunk(
   "cart/fetchProductAndAddToCart",
   async (productId: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `https://e-commerce-finalproject-server.onrender.com/api/products/${productId}`
-      );
+      const response = await axios.get(`/api/products/${productId}`);
       const product = response.data;
 
       const cartItem: CartItem = {
         _id: product._id,
         productId: product.productId,
-        productName: product.productName, // Ensure these fields are present
+        productName: product.productName,
         price: product.price,
         img: product.img,
         quantity: 1,
@@ -91,7 +82,7 @@ export const fetchProductAndAddToCart = createAsyncThunk(
   }
 );
 
-// Checkout
+// Handle checkout
 export const checkout = createAsyncThunk(
   "cart/checkout",
   async (
@@ -99,11 +90,8 @@ export const checkout = createAsyncThunk(
     { dispatch }
   ) => {
     try {
-      await axios.post(
-        "https://e-commerce-finalproject-server.onrender.com/api/orders/checkout",
-        payload
-      );
-      dispatch(clearCart()); // Clear the cart in Redux store
+      await axios.post("http://localhost:3000/api/orders/checkout", payload);
+      dispatch(clearCart()); // Clear the cart after successful checkout
     } catch (error) {
       console.error("Checkout failed:", error);
       throw error; // Rethrow the error to handle it in the component
@@ -111,7 +99,7 @@ export const checkout = createAsyncThunk(
   }
 );
 
-// Action to load cart items
+// Action to load cart items (if needed)
 export const loadCartItems = createAsyncThunk(
   "cart/loadCartItems",
   async (items: CartItem[]) => {

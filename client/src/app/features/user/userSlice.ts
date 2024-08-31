@@ -9,6 +9,7 @@ import type { User, Order } from "./userTypes";
 import { Product } from "../product/Product";
 
 interface UserState {
+  token: string | null; // Added token to state
   profile: User | null;
   pastOrders: Order[];
   products: Product[]; // Added for product storage
@@ -17,9 +18,10 @@ interface UserState {
 }
 
 const initialState: UserState = {
+  token: null, // Initialize token
   profile: null,
   pastOrders: [],
-  products: [], // Initialize
+  products: [], // Initialize products
   status: "idle",
   error: null,
 };
@@ -27,7 +29,15 @@ const initialState: UserState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setToken(state, action: PayloadAction<string | null>) {
+      state.token = action.payload;
+    },
+    clearToken(state) {
+      state.token = null;
+    },
+    // Additional reducers can be added here
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -77,4 +87,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setToken, clearToken } = userSlice.actions;
 export default userSlice.reducer;

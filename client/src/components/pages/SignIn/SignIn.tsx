@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import "./SignIn.css";
 
-const LOGIN_URL =
-  "https://e-commerce-finalproject-server.onrender.com/api/auth/login";
+const LOGIN_URL = "http://localhost:3000/api/auth/login";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");

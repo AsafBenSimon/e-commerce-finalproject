@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectTotalCartItems } from "../../app/features/cart/cartSlice";
 import { RootState } from "../../app/store";
@@ -7,7 +7,9 @@ import { setSearchInput } from "../../app/features/product/productSlice";
 import "./NavBar.css";
 
 const NavBar: React.FC = () => {
-  const dispatch = useDispatch(); // Get dispatch function
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const totalItems = useSelector(selectTotalCartItems);
   const searchInput = useSelector(
     (state: RootState) => state.product.searchInput
@@ -15,6 +17,20 @@ const NavBar: React.FC = () => {
   const filteredProducts = useSelector(
     (state: RootState) => state.product.filteredProducts
   );
+
+  // Clear search input when location changes (e.g., user navigates to a new page)
+  useEffect(() => {
+    dispatch(setSearchInput(""));
+  }, [location, dispatch]);
+
+  // Handle search button click
+  const handleSearch = () => {
+    if (!searchInput || filteredProducts.length === 0) {
+      // Do nothing if searchInput is empty or no products are filtered
+      return;
+    }
+    navigate(`/product/${filteredProducts[0]._id}`);
+  };
 
   return (
     <div className="NavBar">
@@ -31,9 +47,13 @@ const NavBar: React.FC = () => {
               type="text"
               placeholder="Search here"
               value={searchInput}
-              onChange={(e) => dispatch(setSearchInput(e.target.value))} // Use dispatch here
+              onChange={(e) => dispatch(setSearchInput(e.target.value))}
             />
-            <button className="search-button" type="button">
+            <button
+              className="search-button"
+              type="button"
+              onClick={handleSearch} // Attach the search handler
+            >
               Search
             </button>
             {searchInput && filteredProducts.length > 0 && (
@@ -52,11 +72,7 @@ const NavBar: React.FC = () => {
           </div>
           <div className="NavBar-Cart">
             <Link to="/cart" className="cart-link">
-              <img
-                className="svg-cart"
-                src="/assets/img/cart.png" // Correct path
-                alt="Cart"
-              />
+              <img className="svg-cart" src="/assets/img/cart.png" alt="Cart" />
               <span>
                 <span className="cart-text">Your Cart</span>
                 <span className="cart-count">{totalItems}</span>

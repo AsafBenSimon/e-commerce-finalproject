@@ -18,7 +18,7 @@ const productValidation = (data) => {
 };
 
 const reviewSchema = Joi.object({
-  author: Joi.string().required(),
+  Username: Joi.string().required(),
   rating: Joi.number().integer().min(1).max(5).required(),
   comment: Joi.string().required(),
 });

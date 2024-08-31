@@ -81,7 +81,7 @@ const LastOrders: React.FC = () => {
                         })}
                       </ul>
                       <div>
-                        <strong>Total Price:</strong> ${order.totalPrice}
+                        <strong>Total Price:</strong> ₪{order.totalPrice}
                       </div>
                     </div>
                   </div>

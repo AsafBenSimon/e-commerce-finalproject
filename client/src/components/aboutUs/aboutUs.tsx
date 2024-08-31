@@ -1,5 +1,6 @@
 import React from "react";
 import "./aboutUs.css";
+import { Link } from "react-router-dom";
 
 function AboutUs() {
   return (
@@ -37,8 +38,12 @@ function AboutUs() {
       </div>
       <div className="about-us-service">
         <span className="service-title">SERVICE</span>
-        <span className="service-link my-profile"> My Profile</span>
-        <span className="service-link">View Cart</span>
+        <Link to={"/profile"}>
+          <span className="service-link my-profile"> My Profile</span>
+        </Link>
+        <Link to={"/cart"}>
+          <span className="service-link">View Cart</span>
+        </Link>
       </div>
     </div>
   );
