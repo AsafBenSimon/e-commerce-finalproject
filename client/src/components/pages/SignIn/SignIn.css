@@ -71,3 +71,34 @@
   color: green;
   margin-top: 10px;
 }
+
+/* Styling for the "Don't have an account? Register here" text */
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--red);
+  font-weight: bold;
+}
+
+/* Link styling */
+.register-link a {
+  color: var(--red);
+  text-decoration: underline; /* Underline to indicate it's a link */
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.register-link a:hover {
+  color: #ff6666; /* Slightly lighter red on hover */
+  text-shadow: 0 0 5px rgba(255, 102, 102, 0.5); /* Soft glow effect */
+  text-decoration: none; /* Remove underline on hover for a cleaner look */
+}
+
+/* Active state */
+.register-link a:active {
+  color: #cc0000; /* Darker red when clicked */
+  text-shadow: none;
+  transform: scale(0.98); /* Slightly reduces size on click */
+}

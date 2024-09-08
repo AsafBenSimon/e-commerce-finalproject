@@ -83,7 +83,7 @@ const SignIn: React.FC = () => {
               <button type="submit">Sign In</button>
               {error && <p className="error">{error}</p>}
             </form>
-            <p>
+            <p className="register-link">
               Don't have an account? <Link to="/register">Register here</Link>
             </p>
           </>
